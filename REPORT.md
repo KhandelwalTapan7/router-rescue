@@ -1,6 +1,6 @@
 # REPORT - Router Rescue
 
-## 1. Numbers (`python3 evaluate.py`)
+## 1. Numbers (`python evaluate.py`)
 "Right" depends on label type (see LABELING_RULES.md): for `TOOL` rows the tool must match; for CLARIFY / gap / action / how-to / context / OOS rows, **abstaining is right and any tool is a silent wrong route**.
 
 | | Baseline dev | router.py dev* | Baseline held-out** | router.py held-out** |
