@@ -1,0 +1,151 @@
+query_id,query,label_type,primary_tool,acceptable_alts,confidence,flags,notes
+q001,how many purchase orders are pending approval,TOOL,purchase_po_count,,H,,approval_status=PENDING
+q002,show me the last 10 purchase orders,TOOL,purchase_po_list,,H,,"limit=10. Baseline misses: 'show me the last 10 purchase orders' matches no list keyword, so count tool wins"
+q003,how do i create a purchase order,NO_TOOL_HOWTO,,,H,,"procedural, not data"
+q004,what is the total value of approved purchase orders,TOOL,purchase_po_total_value,,H,,APPROVED
+q005,how many stock items do we have,TOOL,inventory_stock_count,,H,,
+q006,show me pending orders,CLARIFY,,purchase_po_list|sales_so_list|production_workorder_list|jobwork_po_list,M,,'pending orders' spans 4 modules; guessing is worse than asking
+q007,list purchase orders for vendor Sharma Industries,TOOL,purchase_po_by_vendor,,H,,
+q008,how many employees are there,TOOL,hr_employee_count,,H,,
+q009,which items are below reorder level,TOOL,inventory_low_stock_list,,H,,
+q010,how many are there?,NO_TOOL_CONTEXT,,,H,,no referent; needs chat history
+q011,show current stock,TOOL,inventory_stock_list,,H,,
+q012,how many sales orders are confirmed,TOOL,sales_so_count,,H,,status=CONFIRMED
+q013,show purchase orders that are not approved,TOOL,purchase_po_list,,M,PARAM_GAP,'not approved' is a negation; tool takes one approval_status. Pending-approval list would be a subset (drops DRAFT/REJECTED) so not accepted as alt
+q014,what is the stock of item CMP-4471,TOOL,inventory_stock_by_item,,H,,
+q015,list employees in the production department,TOOL,hr_employee_list,,H,,department=production
+q016,how many NCRs are open,TOOL,quality_ncr_count,,H,,
+q017,approve PO097,NO_TOOL_ACTION,,,H,,write action; 'PO097' identifier
+q018,total inventory value,TOOL,inventory_stock_value_total,,H,,
+q019,how many people are present today,TOOL,hr_attendance_today,,H,,'people' = employees
+q020,list open non conformance reports,TOOL,quality_ncr_list,,H,,'list' asks for rows. Baseline returns count
+q021,how many work orders are in progress,TOOL,production_workorder_count,production_wip_count,M,,"'work orders in progress' = WO status; WIP tool counts items, not WOs, but a reviewer could accept it"
+q022,what is the status of PO 97,NO_TOOL_GAP,,,H,,single-document lookup; no tool takes a PO number
+q023,show me the customer list,TOOL,sales_customer_list,,H,,
+q024,how do i change a PO status,NO_TOOL_HOWTO,,,H,,how-to and also a write
+q025,how many leave requests are pending,TOOL,hr_leave_pending_count,,H,,
+q026,total sales order value this quarter,TOOL,sales_so_total_value,,H,,period=quarter
+q027,which machines are down,TOOL,production_machine_status_list,,H,,status filter 'down'
+q028,pendin po cnt,TOOL,purchase_po_count,,M,TYPO,'pendin po cnt' -> pending PO count
+q029,list released work orders,TOOL,production_workorder_list,,H,,status=released. Baseline returns count
+q030,how many invoices are unpaid,TOOL,sales_invoice_count,,M,,payment_status=UNPAID. Only invoice tool in catalog is sales; could mean vendor bills
+q031,show me all departments,TOOL,hr_department_list,,H,,
+q032,what's the weather in jaipur today,NO_TOOL_OOS,,,H,,
+q033,total production output yesterday,TOOL,production_output_total,,H,,period=yesterday
+q034,how many action items are open,TOOL,mom_action_item_count,,H,,status=open
+q035,total value,CLARIFY,,purchase_po_total_value|sales_so_total_value|inventory_stock_value_total|crm_opportunity_total_value,H,,no entity. Baseline silently picks PO value
+q036,who joined last month,TOOL,hr_new_joiners_list,,H,,
+q037,list job work orders,TOOL,jobwork_po_list,,M,,'job work orders' = job work POs; NOT production work orders
+q038,how many gate passes were issued this month,TOOL,gatepass_count,,H,,period=this month
+q039,how many POs are pending and what does pending mean,TOOL_PARTIAL,purchase_po_count,,H,COMPOUND,count part answerable; 'what does pending mean' is explanation
+q040,show recent minutes of meeting,TOOL,mom_list,,H,,
+q041,how many payments are pending,TOOL,finance_payment_pending_count,,H,,
+q042,what is our rejection rate this month,TOOL,quality_rejection_rate,,H,,
+q043,po ka status kya hai,CLARIFY,,purchase_po_count|purchase_po_list,L,HINGLISH,'PO status?' with no document id and no shape; ambiguous
+q044,list overdue invoices,TOOL,finance_invoice_overdue_list,,H,,
+q045,how many leads do we have,TOOL,crm_lead_count,,H,,
+q046,show inspection details for last week,TOOL,quality_inspection_list,,M,PARAM_GAP,list tool has no date filter
+q047,compare this month's production output with last month,TOOL_PARTIAL,production_output_total,,M,MULTI_CALL,"comparison = 2 calls (this month, last month) + arithmetic"
+q048,total downtime last week,TOOL,production_downtime_total,,H,,
+q049,list material issue slips,TOOL,store_issue_list,,H,,
+q050,how many items are in the item master,TOOL,inventory_item_master_count,,H,,
+q051,who is on leave this week,TOOL,hr_leave_list,,M,PARAM_GAP,no period param on list tool
+q052,delete all draft POs,NO_TOOL_ACTION,,,H,,destructive write. Baseline routes it to a count tool
+q053,show me production output by shift,TOOL,production_shift_output,,H,,Baseline picks output_total
+q054,how many indents are pending,TOOL,store_indent_pending_count,,H,,
+q055,list qualified leads,TOOL,crm_lead_list,,H,,stage=qualified
+q056,give me the report on how leave approval works,NO_TOOL_HOWTO,,,H,,'give me the report' is a list verb trap; content is how-to
+q057,total outstanding receivables,TOOL,finance_outstanding_total,,H,,
+q058,how many items are in WIP,TOOL,production_wip_count,,H,,
+q059,show job work vendors,TOOL,jobwork_vendor_list,,H,,Baseline picks jobwork_po_list
+q060,count of rejected purchase orders,TOOL,purchase_po_count,,H,,REJECTED
+q061,stock,CLARIFY,,inventory_stock_list|inventory_stock_count|inventory_stock_by_item|inventory_stock_value_total,H,,one word
+q062,list purchase orders with value above 5 lakh,TOOL,purchase_po_list,,M,PARAM_GAP,value threshold not a param
+q063,how many customers are inactive,TOOL,sales_customer_count,,H,,active=false
+q064,show me failed inspections,TOOL,quality_inspection_list,,H,,result=FAIL
+q065,why is our rejection rate so high,NO_TOOL_ANALYSIS,,,H,,"causal question; rate tool is context, not an answer"
+q066,list gate passes issued today,TOOL,gatepass_list,,H,,
+q067,how much stock do we have of bearing 6204,TOOL,inventory_stock_by_item,,H,,
+q068,how many meetings were held last month,TOOL,mom_count,,H,,
+q069,list all suppliers with pending orders,NO_TOOL_GAP,,,H,,needs distinct-vendor aggregation; po_by_vendor needs a name
+q070,show recent payments,TOOL,finance_payment_list,,H,,
+q071,how many GRNs were posted this month,TOOL,purchase_grn_count,,H,,
+q072,list my action items,TOOL,mom_action_item_list,,H,SESSION_USER,"owner = current user, comes from session not query"
+q073,which machines were down yesterday and what did it cost us,NO_TOOL_GAP,,,M,COMPOUND,historical machine status (tool is current only) plus cost; nothing computes cost
+q074,how many job work POs are pending,TOOL,jobwork_po_count,jobwork_pending_count,L,,'pending' = status or awaiting return; both defensible
+q075,show me all pending payments,TOOL,finance_payment_list,,H,,'show me all' wants rows. Baseline returns count
+q076,total employee count,TOOL,hr_employee_count,,H,,
+q077,as per our discussion yesterday please send me that list again,NO_TOOL_CONTEXT,,,H,,
+q078,list inspections that passed,TOOL,quality_inspection_list,,H,,result=PASS
+q079,how many COAs were issued,TOOL,quality_coa_count,,H,,
+q080,show me sales orders that are cancelled,TOOL,sales_so_list,,H,,status=CANCELLED. Baseline returns count
+q081,give me top 5 vendors by purchase order value,NO_TOOL_GAP,,,H,,top-N by vendor aggregation; not in catalog
+q082,how many gate passes are still open,TOOL,gatepass_count,gatepass_pending_return_count,M,,"'open' = status, but could mean not returned"
+q083,list new joiners in the last 30 days,TOOL,hr_new_joiners_list,,H,,days=30
+q084,what is the stock level of raw material RM-2201,TOOL,inventory_stock_by_item,,H,,
+q085,count of completed work orders,TOOL,production_workorder_count,,H,,
+q086,show me overdue action items,TOOL,mom_action_item_list,,M,,status=OVERDUE assumed valid value
+q087,how many material issue slips this week,TOOL,store_issue_count,,H,,
+q088,what is our pipeline value,TOOL,crm_opportunity_total_value,,H,,
+q089,list employees who resigned,TOOL,hr_employee_list,,L,PARAM_GAP,list tool has no status param; would return all employees
+q090,total po value pending approval,TOOL,purchase_po_total_value,,H,,status=PENDING. Baseline returns count
+q091,which returnable gate passes are overdue,TOOL_PARTIAL,gatepass_pending_return_count,gatepass_list,L,SHAPE_MISMATCH,"wants rows, only a count tool covers 'not returned'"
+q092,show me po numbers raised last week,TOOL,purchase_po_list,,M,PARAM_GAP,no date filter
+q093,how many sales invoices are partially paid,TOOL,sales_invoice_count,,H,,
+q094,items to reorder,TOOL,inventory_low_stock_list,,H,,
+q095,attendance for today,TOOL,hr_attendance_today,,H,,
+q096,how much job work is not returned yet,TOOL,jobwork_pending_count,,M,,'how much' phrased as count
+q097,list leads in proposal stage,TOOL,crm_lead_list,,H,,
+q098,total downtime for machine M-12,TOOL,production_downtime_total,,H,,
+q099,show grn list for this week,TOOL,purchase_grn_list,,H,PARAM_GAP,no date filter
+q100,how many draft POs,TOOL,purchase_po_count,,H,,DRAFT
+q101,Could you tell me how many purchase orders are awaiting approval?,TOOL,purchase_po_count,,H,,
+q102,po list please,TOOL,purchase_po_list,,H,,
+q103,HOW MANY EMPLOYEES ARE ACTIVE,TOOL,hr_employee_count,,H,,status=active
+q104,show inventory list for warehouse A,TOOL,inventory_stock_list,,H,,
+q105,count of critical NCRs,TOOL,quality_ncr_count,,H,,severity=critical
+q106,i need the list of open work orders,TOOL,production_workorder_list,,H,,Baseline returns count
+q107,what's the total spend on purchase orders,TOOL,purchase_po_total_value,,H,,Baseline returns count
+q108,display machine status,TOOL,production_machine_status_list,,H,,
+q109,pending inspections count,TOOL,quality_inspection_pending_count,,H,,
+q110,which customers do we have in Pune,TOOL,sales_customer_list,,M,PARAM_GAP,city not a param
+q111,list all items in the catalogue,TOOL,inventory_item_master_list,,H,,
+q112,how many action items are done,TOOL,mom_action_item_count,,H,,
+q113,payment list for last month,TOOL,finance_payment_list,,H,PARAM_GAP,no date filter
+q114,count of WIP items on line 2,TOOL,production_wip_count,,H,,line=2
+q115,show me leads from the website,TOOL,crm_lead_list,,M,PARAM_GAP,source filter exists only on the count tool
+q116,how many GRNs are in draft,TOOL,purchase_grn_count,,H,,status=DRAFT
+q117,employee list with joining dates,TOOL,hr_employee_list,,H,,
+q118,total receivable from Mehta Enterprises,TOOL,finance_outstanding_total,,H,,
+q119,show low stock items,TOOL,inventory_low_stock_list,,H,,
+q120,what is the rejection percentage,TOOL,quality_rejection_rate,,H,,
+q121,list dispatched sales orders,TOOL,sales_so_list,,H,,
+q122,how many job work vendors are registered,TOOL_PARTIAL,jobwork_vendor_list,,M,SHAPE_MISMATCH,no vendor count tool; row count of list answers it
+q123,opportunity pipeline total,TOOL,crm_opportunity_total_value,,H,,
+q124,attendance count for yesterday,TOOL,hr_attendance_today,,M,,tool name says today but has a date param
+q125,list purchase orders from vendor Kiran Auto,TOOL,purchase_po_by_vendor,,H,,
+q126,how many items in item master under category electrical,TOOL,inventory_item_master_count,,H,,
+q127,total production quantity for item FG-880,TOOL,production_output_total,,H,,
+q128,which POs are stuck in approval,TOOL,purchase_po_pending_approval_list,,H,,
+q129,show purchase orders expiring in the next 7 days,TOOL,purchase_po_expiring,,H,,days=7
+q130,how many open POs do we have,TOOL,purchase_po_count,,H,,po_type=OPEN
+q131,list recent goods receipt notes,TOOL,purchase_grn_list,,H,,Baseline returns count
+q132,shift wise production for today,TOOL,production_shift_output,,H,,
+q133,how many active customers,TOOL,sales_customer_count,,H,,
+q134,show the meeting list,TOOL,mom_list,,H,,
+q135,headcount by department,TOOL,hr_department_list,hr_employee_count,M,,department list carries headcount per department
+q136,list open gate passes,TOOL,gatepass_list,,H,,Baseline: no match
+q137,how many material issues were raised,TOOL,store_issue_count,,H,,Baseline: no match
+q138,stock value total,TOOL,inventory_stock_value_total,,H,,Baseline: no match
+q139,give me the first 5 purchase orders,TOOL,purchase_po_list,,H,,Baseline returns count
+q140,list all job work vendors,TOOL,jobwork_vendor_list,,H,,
+q141,count of open NCRs by severity,TOOL_PARTIAL,quality_ncr_count,,M,MULTI_CALL,group by severity = one call per severity
+q142,which employees are in the quality department,TOOL,hr_employee_list,,H,,
+q143,total number of work orders,TOOL,production_workorder_count,,H,,
+q144,pending indent count,TOOL,store_indent_pending_count,,H,,
+q145,how many inspections are pending,TOOL,quality_inspection_pending_count,,H,,
+q146,list sales orders dispatched this month,TOOL,sales_so_list,,H,PARAM_GAP,
+q147,total sales value this year,TOOL,sales_so_total_value,,H,,
+q148,how many work orders are planned,TOOL,production_workorder_count,,H,,status=PLANNED
+q149,show me the item master list,TOOL,inventory_item_master_list,,H,,
+q150,which action items are overdue,TOOL,mom_action_item_list,,H,,
