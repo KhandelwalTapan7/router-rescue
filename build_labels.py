@@ -1,4 +1,3 @@
-"""Builds labels.csv (dev set) and heldout.csv from compact tables. Query text is pulled from queries.txt by id."""
 import csv, re
 from pathlib import Path
 T = dict(T="TOOL", P="TOOL_PARTIAL", C="CLARIFY", G="NO_TOOL_GAP", A="NO_TOOL_ACTION",

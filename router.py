@@ -1,16 +1,3 @@
-"""router.py - entity -> shape -> tool router with explicit abstention.
-
-Design (stdlib only, deterministic, ~1 ms/query):
-  1. Gates: things that are NOT lookups (write actions, how-to, analysis, missing referent).
-  2. Entity: first match in an ORDERED list (specific before generic), so 'job work order'
-     is a job-work thing, not a production work order.
-  3. Shape: count / list / value, read from the wording (count > list > value).
-  4. Per-entity resolver picks one of the 62 tools, or abstains (None) with a category.
-
-route(query) -> (tool_name | None, confidence, reason). None = "send to fallback layer";
-the reason starts with ABSTAIN[<category>] so evaluate.py can score abstention types.
-Not a general NLU system: it is a readable decision table tuned on the 150 dev queries.
-"""
 from __future__ import annotations
 import difflib, json, re
 from pathlib import Path

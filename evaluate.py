@@ -1,15 +1,3 @@
-"""evaluate.py - baseline vs router.py against labels.csv (dev) and heldout.csv.
-
-    python3 evaluate.py            # summary
-    python3 evaluate.py --errors   # also list every disagreement
-Python 3.9+, standard library only. Run from the repo root.
-
-Scoring, per query (label_type decides what "right" means):
-  TOOL          right = predicted tool in {primary} + acceptable_alts. Abstaining = MISS (safe, not right).
-  TOOL_PARTIAL  right = primary/alt ("partial credit" bucket). Abstaining = SAFE. Other tool = WRONG.
-  everything else (CLARIFY, NO_TOOL_*): right = abstain. Any tool = WRONG ("silent wrong route").
-The baseline's "<no match>" counts as an abstention (production sends it to the fallback layer).
-"""
 from __future__ import annotations
 import csv, importlib.util, statistics, sys, time
 from collections import Counter, defaultdict

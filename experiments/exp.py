@@ -1,9 +1,3 @@
-"""Dead ends, kept on purpose. Each variant is scored with evaluate.py's own scoring on labels.csv.
-    python3 experiments/exp.py
-E1  TF-IDF cosine between query and each tool's (description + keywords) text.       -> abstain threshold sweep
-E2  baseline with MIN_SCORE lowered to 1 (recover the 30 fall-throughs).
-E3  baseline + 'shape-fix': verb boost applied to every tool with a keyword hit AND penalty for wrong shape.
-"""
 import math, re, sys, json, importlib.util
 from pathlib import Path
 from collections import Counter
