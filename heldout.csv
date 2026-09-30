@@ -1,0 +1,41 @@
+query_id,query,label_type,primary_tool,acceptable_alts,notes
+h01,what's the number of employees we currently have,TOOL,hr_employee_count,,
+h02,any POs waiting for approval?,TOOL,purchase_po_pending_approval_list,purchase_po_count,no shape word
+h03,how many goods receipt notes have we posted,TOOL,purchase_grn_count,,
+h04,list of all machines,TOOL,production_machine_status_list,,
+h05,delete PO 55,NO_TOOL_ACTION,,,
+h06,how to raise an NCR,NO_TOOL_HOWTO,,,
+h07,what's the capital of France,NO_TOOL_OOS,,,
+h08,how much is our inventory worth,TOOL,inventory_stock_value_total,,
+h09,which items should we reorder,TOOL,inventory_low_stock_list,,
+h10,number of gate passes issued today,TOOL,gatepass_count,,
+h11,please show pending leave requests,TOOL,hr_leave_list,hr_leave_pending_count,
+h12,how many POs expire this month,TOOL_PARTIAL,purchase_po_expiring,,"count wanted, list tool"
+h13,total downtime of M-7 yesterday,TOOL,production_downtime_total,,
+h14,give me sales orders for customer Mehta Enterprises,TOOL,sales_so_list,,no customer param
+h15,what did I ask earlier,NO_TOOL_CONTEXT,,,
+h16,how many of them are approved,NO_TOOL_CONTEXT,,,
+h17,employees count,TOOL,hr_employee_count,,
+h18,stock of item BRG-220,TOOL,inventory_stock_by_item,,
+h19,list of new hires this quarter,TOOL,hr_new_joiners_list,,
+h20,sales revenue this month,TOOL,sales_so_total_value,,
+h21,how many inspections failed,NO_TOOL_GAP,,no count tool with result filter,
+h22,purchase order,CLARIFY,,purchase_po_count|purchase_po_list,bare noun
+h23,how many job work vendors do we have,TOOL_PARTIAL,jobwork_vendor_list,,
+h24,outstanding from customer Mehta,TOOL,finance_outstanding_total,,
+h25,what is the po approval process,NO_TOOL_HOWTO,,,
+h26,cancel sales order SO-88,NO_TOOL_ACTION,,,
+h27,who all are absent today,TOOL,hr_attendance_today,,
+h28,meetings list for this week,TOOL,mom_list,,
+h29,kitne employees hai,TOOL,hr_employee_count,,Hinglish
+h30,pending payments,CLARIFY,,finance_payment_pending_count|finance_payment_list,no shape
+h31,how many work orders are late,TOOL,production_workorder_count,,
+h32,show me overdue,CLARIFY,,finance_invoice_overdue_list|mom_action_item_list|gatepass_pending_return_count,no entity
+h33,total production this week,TOOL,production_output_total,,
+h34,list all POs,TOOL,purchase_po_list,,
+h35,gate pass details,TOOL,gatepass_list,,
+h36,reject PO 12,NO_TOOL_ACTION,,,
+h37,which vendor has the most pending orders,NO_TOOL_GAP,,,
+h38,inventory,CLARIFY,,inventory_stock_list|inventory_stock_count|inventory_stock_value_total,one word
+h39,how many are overdue,CLARIFY,,finance_invoice_overdue_list|mom_action_item_list,|no entity
+h40,give me stock of RM-2201 and RM-2202,TOOL,inventory_stock_by_item,,two items
